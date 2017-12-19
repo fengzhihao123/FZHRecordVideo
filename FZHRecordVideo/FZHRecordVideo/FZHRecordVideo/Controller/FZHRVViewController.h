@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+typedef void(^TakeOperationSureBlock)(id item);
 @interface FZHRVViewController : ViewController
-
+@property (copy, nonatomic) TakeOperationSureBlock takeBlock;
 @end

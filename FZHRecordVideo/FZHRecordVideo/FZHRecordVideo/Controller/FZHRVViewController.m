@@ -9,6 +9,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
 #import "FZHAVPlayer.h"
+#import "FZHRecordView.h"
 //const
 static const NSInteger kHoldSecond = 1; //时间大于这个就是视频，否则为拍照
 static const NSInteger kDelayHideLabelTime = 3; //延时隐藏label时间
@@ -18,7 +19,7 @@ AVCaptureFileOutputRecordingDelegate
 >
 //UI
 @property (nonatomic, strong) UIButton *dismissButton; //消失按钮
-@property (nonatomic, strong) UIButton *recordButton; //录制按钮
+@property (nonatomic, strong) FZHRecordView *recordButton; //录制按钮
 @property (nonatomic, strong) UIButton *switchCameraButton; //切换摄像头按钮
 @property (nonatomic, strong) UILabel *remindLabel; //提示label
 @property (nonatomic, strong) UIButton *recordCompleteButton; //录制完成按钮
@@ -232,37 +233,36 @@ AVCaptureFileOutputRecordingDelegate
 }
 
 - (void)recordButtonClick {
-    _recordButton.selected = !_recordButton.selected;
-    if (self.recordButton.selected) { //开始录制
-        //根据设备输出获得连接
-        AVCaptureConnection *connection = [self.captureMovieFileOutput connectionWithMediaType:AVMediaTypeAudio];
-        //根据连接取得设备输出的数据
-        if (![self.captureMovieFileOutput isRecording]) {
-            //如果支持多任务则开始多任务
-            if ([[UIDevice currentDevice] isMultitaskingSupported]) {
-                self.backgroundTaskIdentifier = [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:nil];
-            }
-            if (self.saveVideoUrl) {
-                [[NSFileManager defaultManager] removeItemAtURL:self.saveVideoUrl error:nil];
-            }
-            //预览图层和视频方向保持一致
-            connection.videoOrientation = [self.previewLayer connection].videoOrientation;
-            NSString *outputFilePath = [NSTemporaryDirectory() stringByAppendingString:@"record.mov"];
-            NSURL *fileURL = [NSURL fileURLWithPath:outputFilePath];
-            [self.captureMovieFileOutput startRecordingToOutputFileURL:fileURL recordingDelegate:self];
-        } else {
-            [self.captureMovieFileOutput stopRecording];
-        }
-    } else { //停止录制
-        if (!self.isVideo) {
-            dispatch_queue_t mainQueue = dispatch_get_main_queue();
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), mainQueue, ^{ //延时3秒
-                [self.captureMovieFileOutput stopRecording];
-            });
-        } else {
-            [self.captureMovieFileOutput stopRecording];
-        }
-    }
+//    if (self.recordButton.selected) { //开始录制
+//        //根据设备输出获得连接
+//        AVCaptureConnection *connection = [self.captureMovieFileOutput connectionWithMediaType:AVMediaTypeAudio];
+//        //根据连接取得设备输出的数据
+//        if (![self.captureMovieFileOutput isRecording]) {
+//            //如果支持多任务则开始多任务
+//            if ([[UIDevice currentDevice] isMultitaskingSupported]) {
+//                self.backgroundTaskIdentifier = [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:nil];
+//            }
+//            if (self.saveVideoUrl) {
+//                [[NSFileManager defaultManager] removeItemAtURL:self.saveVideoUrl error:nil];
+//            }
+//            //预览图层和视频方向保持一致
+//            connection.videoOrientation = [self.previewLayer connection].videoOrientation;
+//            NSString *outputFilePath = [NSTemporaryDirectory() stringByAppendingString:@"record.mov"];
+//            NSURL *fileURL = [NSURL fileURLWithPath:outputFilePath];
+//            [self.captureMovieFileOutput startRecordingToOutputFileURL:fileURL recordingDelegate:self];
+//        } else {
+//            [self.captureMovieFileOutput stopRecording];
+//        }
+//    } else { //停止录制
+//        if (!self.isVideo) {
+//            dispatch_queue_t mainQueue = dispatch_get_main_queue();
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), mainQueue, ^{ //延时3秒
+//                [self.captureMovieFileOutput stopRecording];
+//            });
+//        } else {
+//            [self.captureMovieFileOutput stopRecording];
+//        }
+//    }
 }
 
 - (void)recordCompleteButtonClick { //这里进行保存或者发送出去
@@ -453,12 +453,9 @@ AVCaptureFileOutputRecordingDelegate
     return _recordCompleteButton;
 }
 
-- (UIButton *)recordButton {
+- (FZHRecordView *)recordButton {
     if (!_recordButton) {
-        _recordButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _recordButton.frame = CGRectMake(300, 400, 50, 50);
-        [_recordButton setTitle:@"record" forState:UIControlStateNormal];
-        [_recordButton addTarget:self action:@selector(recordButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        _recordButton = [[FZHRecordView alloc]initWithFrame:CGRectMake(200, 400, 60, 60) withMaxRecordNum:10];
     }
     return _recordButton;
 }

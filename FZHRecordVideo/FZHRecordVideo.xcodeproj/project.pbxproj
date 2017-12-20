@@ -15,6 +15,7 @@
 		0078CC081FE7A201005DDE7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0078CC071FE7A201005DDE7B /* main.m */; };
 		0078CC141FE7A2DC005DDE7B /* FZHRVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0078CC131FE7A2DC005DDE7B /* FZHRVViewController.m */; };
 		0078CC171FE8EAB1005DDE7B /* FZHAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0078CC161FE8EAB0005DDE7B /* FZHAVPlayer.m */; };
+		0078CC1A1FEA439E005DDE7B /* FZHRecordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0078CC191FEA439D005DDE7B /* FZHRecordView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		0078CC131FE7A2DC005DDE7B /* FZHRVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FZHRVViewController.m; sourceTree = "<group>"; };
 		0078CC151FE8EAB0005DDE7B /* FZHAVPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FZHAVPlayer.h; sourceTree = "<group>"; };
 		0078CC161FE8EAB0005DDE7B /* FZHAVPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FZHAVPlayer.m; sourceTree = "<group>"; };
+		0078CC181FEA439D005DDE7B /* FZHRecordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FZHRecordView.h; sourceTree = "<group>"; };
+		0078CC191FEA439D005DDE7B /* FZHRecordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FZHRecordView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 				0078CC131FE7A2DC005DDE7B /* FZHRVViewController.m */,
 				0078CC151FE8EAB0005DDE7B /* FZHAVPlayer.h */,
 				0078CC161FE8EAB0005DDE7B /* FZHAVPlayer.m */,
+				0078CC181FEA439D005DDE7B /* FZHRecordView.h */,
+				0078CC191FEA439D005DDE7B /* FZHRecordView.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 				0078CC081FE7A201005DDE7B /* main.m in Sources */,
 				0078CBFA1FE7A201005DDE7B /* AppDelegate.m in Sources */,
 				0078CC171FE8EAB1005DDE7B /* FZHAVPlayer.m in Sources */,
+				0078CC1A1FEA439E005DDE7B /* FZHRecordView.m in Sources */,
 				0078CC141FE7A2DC005DDE7B /* FZHRVViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
